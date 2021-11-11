@@ -1,0 +1,56 @@
+$def with (orders, game_parms)
+
+$for parm in game_parms:
+    <body>
+    <h2 id="gamehead">Game Parameters</h2>
+    <p>Starting Date: $parm.start_date </p>
+    <p>Ending Date: $parm.end_date </p>
+    <p>Game Starting Balance: $parm.invest_total </p>
+    <p>Current Balance: </p>
+    <p>P/L Overall Dollars Gained: </p>
+    <p>P/L Overall Percent Gained: </p>    
+    <p>P/L Day Dollars Gained: </p>
+    <p>P/L Day Percent Gained: </p>   
+    <p>Symbol: </p>
+    <p>Current Date: </p> 
+
+    </body>
+
+
+<ul>
+    <!-- margin-top:100px; -->
+              
+    $for order in orders:
+    <table>
+    <style>
+        #orderhead {
+              margin-left:900px;
+        } </style>
+    <h2 id="orderhead">Open Orders</h2>
+    
+    <style>
+            table, th, td {
+              border: 1px solid black;
+                margin-left:1000px;
+            }
+            
+        </style>        
+    <tr>
+        <th>Order Number</th>        
+        <th>Symbol</th>
+        <th># of Shares</th>
+        <th>Price Stop</th>
+        <th>Link</th>
+    </tr>
+
+    <tr>
+        <td>
+        <a href="/view/$order.order_id">$order.order_id</a></td>
+        <td>$order.symbol</td>
+        <td>$order.num_of_shares</td>
+        <td>$order.limit_price</td>
+        <td><a href="/edit/$order.order_id">Edit</a>
+        </td>
+    </tr>
+    </table>
+</ul>
