@@ -79,7 +79,7 @@ body {
   -ms-flex: 30%; /* IE10 */
   flex: 30%;
   background-color: #f1f1f1;
-  padding: 20px;
+  padding: 10px;
   line-height: 60%; 
 }
 
@@ -88,11 +88,11 @@ body {
   -ms-flex: 70%; /* IE10 */
   flex: 70%;
   background-color: white;
-  padding: 20px;
+  padding: 10px;
 }
 
 /* Fake image, just for this example */
-.fakeimg {
+.image_box {
   background-color: green;
   width: 100%;
   padding: 20px;
@@ -131,22 +131,23 @@ body {
   <a href="/" class="active">Home</a>
   <a href="/nextday">Advance Day</a>
   <a href="/endgame">Quit Game</a>
+  <a href="#" class="right">Link</a>
 </div>
 
 <div class="row">
   <div class="side">
     <h4>Game Performance</h4>
-    <div class="fakeimg" style="height:300px;">
-      
-      Start Date
-    <p>End Date</p></div>
+    <div class="image_box" style="height:100px;">
+        Start Date
+        <p>End Date</p>
+    </div>
     <h4>Orders</h4>
-    <div class="fakeimg" style="height:300px;">Image
+    <div class="image_box" style="height:100px;">Image
     <p>Another Line of Text</p></div><br>
   </div>
   <div class="main">
     <h4>Ticker Chart</h4>
-    <div class="fakeimg" style="height:970px;">
+    <div class="image_box" style="height:970px;">
         <img src="./static/sso_barchart.png" alt="Does Not Display Why?" width="1250" height="900"/>
     </div>
     

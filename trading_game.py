@@ -20,6 +20,8 @@ urls = (
     "Edit",
     "/endgame",
     "End_Game"
+    "/newgame",
+    "New_Game"
 )
 
 
@@ -102,6 +104,19 @@ class End_Game:
         # model_trades.update_post(int(id), form.d.title, form.d.content)
         # raise web.seeother("/")
 
+class New_Game:
+    def GET(self):
+        form = Clear.form()
+        return render.newgame(form)
+
+    def POST(self):
+        # form = Index.form()
+        # post = model_trades.get_post(int(id))
+        # if not form.validates():
+        raise web.seeother("/")
+        # return render.print_graph(form)
+        # model_trades.update_post(int(id), form.d.title, form.d.content)
+        # raise web.seeother("/")
 
 app = web.application(urls, globals())
 sys.argv = ['trading_game.py', '8006']
