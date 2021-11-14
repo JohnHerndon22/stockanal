@@ -2,6 +2,7 @@
 
 """ Basic blog using webpy 0.3 """
 import web
+from web.webapi import SeeOther
 import model_trades
 import sys
 
@@ -10,6 +11,8 @@ import sys
 urls = (
     "/",
     "Index",
+    "/newgame",
+    "New_Game"
     "/view/(\d+)",
     "View",
     "/nextday",
@@ -20,23 +23,32 @@ urls = (
     "Edit",
     "/endgame",
     "End_Game"
-    "/newgame",
-    "New_Game"
+    
 )
 
 
-### Templates
+### Templates and start new game
 t_globals = {"datestr": web.datestr}
 render = web.template.render("templates", base="base_trade", globals=t_globals)
-
+running_game = False
 
 class Index:
     def GET(self):
         """ Show page """
-        game_parms = model_trades.get_parms()
+        if running_game == False:
+            raise web.seeother("/newgame")
+            # form = web.form.Form(
+            #     web.form.Textbox("start_date", web.form.notnull, size=30, description="Start Date"),
+            #     web.form.Textbox("end_date", web.form.notnull, size=30, description="End Date"),
+            #     web.form.Textbox("symbol", web.form.notnull, size=30, description="Symbol"),
+            #     web.form.Textbox("invest_total", web.form.notnull, size=30, description="Invest Total"),
+            #     web.form.Button("Start Game"))
+            # return render.newgame(form)
+        else:
+            game_parms = model_trades.get_parms()
+        
         orders = model_trades.get_orders()
         return render.index(orders, game_parms)
-
 
 class View:
     def GET(self, id):
@@ -105,18 +117,26 @@ class End_Game:
         # raise web.seeother("/")
 
 class New_Game:
+    
+    newgame_id = model_trades.insert_new_game()
+
+    form = web.form.Form(
+        web.form.Textbox("start_date", web.form.notnull, size=30, description="Start Date"),
+        web.form.Textbox("end_date", web.form.notnull, size=30, description="End Date"),
+        web.form.Textbox("symbol", web.form.notnull, size=30, description="Symbol"),
+        web.form.Textbox("invest_total", web.form.notnull, size=30, description="Invest Total"),
+        web.form.Button("Start Game"))
+    
     def GET(self):
-        form = Clear.form()
-        return render.newgame(form)
+        return render.newgame(newgame_id, form)
 
     def POST(self):
         # form = Index.form()
         # post = model_trades.get_post(int(id))
         # if not form.validates():
-        raise web.seeother("/")
         # return render.print_graph(form)
-        # model_trades.update_post(int(id), form.d.title, form.d.content)
-        # raise web.seeother("/")
+        model_trades.update_game_parms(form.start_date, form.end_date, form.symbol, form.invest_total)
+        raise web.seeother("/")
 
 app = web.application(urls, globals())
 sys.argv = ['trading_game.py', '8006']
